@@ -296,37 +296,33 @@ img { max-width: 100%; display: block; }
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 1.6s ease-in-out;
+  opacity: 1;
   z-index: 0;
-  /* Spiritual gradient tint baked onto every slide */
-  /* (applied via pseudo-element so it doesn't affect opacity cross-fade) */
+  /* Boost perceived brightness & saturation of the photo */
+  filter: brightness(1.18) saturate(1.25) contrast(1.05);
 }
 
+/* Light tint so text stays readable without burying the image */
 .hero-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(13, 27, 42, 0.65) 0%,
-    rgba(107, 26, 26, 0.50) 40%,
-    rgba(13, 27, 42, 0.82) 100%
+    rgba(13, 27, 42, 0.30) 0%,
+    rgba(80, 20, 20, 0.20) 45%,
+    rgba(13, 27, 42, 0.55) 100%
   );
 }
 
-.hero-bg.active {
-  opacity: 1;
-}
-
-/* Soft vignette overlay — sits above the bg slides */
+/* Soft vignette overlay — sits above the bg slide */
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(13, 27, 42, 0.7) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(13, 27, 42, 0.35) 100%);
   pointer-events: none;
 }
 

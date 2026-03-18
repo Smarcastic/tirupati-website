@@ -92,28 +92,7 @@
 
 
 /* =============================================================
-   4. HERO BACKGROUND SLIDESHOW — crossfade between brochure images
-   (pages 2 & 3 extracted from the official project brochure)
-   ============================================================= */
-(function initHeroSlideshow() {
-  const slides = document.querySelectorAll('.hero-bg');
-  if (slides.length < 2) return;
-
-  let current = 0;
-  const INTERVAL = 6000; // ms between slides
-
-  function next() {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }
-
-  setInterval(next, INTERVAL);
-})();
-
-
-/* =============================================================
-   5. HERO PARALLAX — subtle shift on the active slide
+   4. HERO PARALLAX — subtle shift on scroll
    ============================================================= */
 (function initParallax() {
   const slides = document.querySelectorAll('.hero-bg');
