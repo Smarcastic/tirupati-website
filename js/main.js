@@ -92,16 +92,38 @@
 
 
 /* =============================================================
-   4. HERO PARALLAX — subtle background shift on scroll
+   4. HERO BACKGROUND SLIDESHOW — crossfade between brochure images
+   (pages 2 & 3 extracted from the official project brochure)
+   ============================================================= */
+(function initHeroSlideshow() {
+  const slides = document.querySelectorAll('.hero-bg');
+  if (slides.length < 2) return;
+
+  let current = 0;
+  const INTERVAL = 6000; // ms between slides
+
+  function next() {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  setInterval(next, INTERVAL);
+})();
+
+
+/* =============================================================
+   5. HERO PARALLAX — subtle shift on the active slide
    ============================================================= */
 (function initParallax() {
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
+  const slides = document.querySelectorAll('.hero-bg');
+  if (!slides.length) return;
 
   function onScroll() {
-    const scrolled = window.scrollY;
-    // Move background upward at 40% of scroll speed
-    hero.style.backgroundPositionY = 'calc(50% + ' + (scrolled * 0.4) + 'px)';
+    const offset = 'calc(50% + ' + (window.scrollY * 0.35) + 'px)';
+    slides.forEach(function (slide) {
+      slide.style.backgroundPositionY = offset;
+    });
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -109,7 +131,7 @@
 
 
 /* =============================================================
-   5. SMOOTH SCROLL — for navbar anchor links
+   6. SMOOTH SCROLL — for navbar anchor links
    (Handled by CSS scroll-behavior: smooth, but this adds
    offset compensation for the fixed navbar height)
    ============================================================= */
@@ -137,7 +159,7 @@
 
 
 /* =============================================================
-   6. ACTIVE NAV LINK — highlight current section in navbar
+   7. ACTIVE NAV LINK — highlight current section in navbar
    ============================================================= */
 (function initActiveNav() {
   const sections  = document.querySelectorAll('section[id]');
