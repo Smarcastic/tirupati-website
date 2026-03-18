@@ -1,6 +1,6 @@
 /**
  * International Reddy Bhavan – Tirupati
- * main.js — Scroll animations, navbar, parallax, mobile menu
+ * main.js — All interactive behaviours
  */
 
 /* =============================================================
@@ -9,17 +9,11 @@
 (function initNavbar() {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
-
   function onScroll() {
-    if (window.scrollY > 60) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
   }
-
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run once on load
+  onScroll();
 })();
 
 
@@ -34,11 +28,9 @@
   hamburger.addEventListener('click', function () {
     hamburger.classList.toggle('open');
     navLinks.classList.toggle('open');
-    // Prevent body scroll when menu is open
     document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
   });
 
-  // Close menu when a link is clicked
   navLinks.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', function () {
       hamburger.classList.remove('open');
@@ -47,7 +39,6 @@
     });
   });
 
-  // Close menu when clicking outside
   document.addEventListener('click', function (e) {
     if (!navbar.contains(e.target) && navLinks.classList.contains('open')) {
       hamburger.classList.remove('open');
@@ -60,13 +51,11 @@
 
 /* =============================================================
    3. SCROLL-REVEAL — IntersectionObserver
-   Elements with class .reveal animate in when they enter view
    ============================================================= */
 (function initScrollReveal() {
   const elements = document.querySelectorAll('.reveal');
   if (!elements.length) return;
 
-  // Use IntersectionObserver if available; fall back to instant visibility
   if (!('IntersectionObserver' in window)) {
     elements.forEach(function (el) { el.classList.add('visible'); });
     return;
@@ -77,14 +66,11 @@
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // animate once
+          observer.unobserve(entry.target);
         }
       });
     },
-    {
-      threshold: 0.12,       // trigger when 12% of element is visible
-      rootMargin: '0px 0px -40px 0px' // slight offset from bottom
-    }
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
 
   elements.forEach(function (el) { observer.observe(el); });
@@ -92,14 +78,50 @@
 
 
 /* =============================================================
-   4. HERO PARALLAX — subtle shift on scroll
+   4. HERO IMAGE SLIDER — 4 slides, 5s interval, fade crossfade
+   ============================================================= */
+(function initHeroSlider() {
+  const slides = document.querySelectorAll('.hero-bg');
+  const dots   = document.querySelectorAll('.hero-dot');
+  if (slides.length < 2) return;
+
+  let current = 0;
+  let timer   = null;
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current] && dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current] && dots[current].classList.add('active');
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(function () { goTo(current + 1); }, 5000);
+  }
+
+  // Dot click
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goTo(parseInt(dot.dataset.slide, 10));
+      startAuto();
+    });
+  });
+
+  startAuto();
+})();
+
+
+/* =============================================================
+   5. HERO PARALLAX — subtle background shift on scroll
    ============================================================= */
 (function initParallax() {
   const slides = document.querySelectorAll('.hero-bg');
   if (!slides.length) return;
 
   function onScroll() {
-    const offset = 'calc(50% + ' + (window.scrollY * 0.35) + 'px)';
+    const offset = 'calc(50% + ' + (window.scrollY * 0.3) + 'px)';
     slides.forEach(function (slide) {
       slide.style.backgroundPositionY = offset;
     });
@@ -110,60 +132,140 @@
 
 
 /* =============================================================
-   6. SMOOTH SCROLL — for navbar anchor links
-   (Handled by CSS scroll-behavior: smooth, but this adds
-   offset compensation for the fixed navbar height)
+   6. SHOWCASE LIGHTBOX
+   ============================================================= */
+(function initLightbox() {
+  const items    = document.querySelectorAll('.showcase-item');
+  const lightbox = document.getElementById('lightbox');
+  const img      = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('lightboxClose');
+  const prevBtn  = document.getElementById('lightboxPrev');
+  const nextBtn  = document.getElementById('lightboxNext');
+  if (!lightbox || !items.length) return;
+
+  let current = 0;
+  const srcs  = Array.from(items).map(function (el) { return el.dataset.src; });
+
+  function open(idx) {
+    current = (idx + srcs.length) % srcs.length;
+    img.src = srcs[current];
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    img.src = '';
+  }
+
+  items.forEach(function (item, i) {
+    item.addEventListener('click', function () { open(i); });
+  });
+
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', function () { open(current - 1); });
+  nextBtn.addEventListener('click', function () { open(current + 1); });
+
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  open(current - 1);
+    if (e.key === 'ArrowRight') open(current + 1);
+  });
+})();
+
+
+/* =============================================================
+   7. TESTIMONIALS SLIDER — auto-scroll every 4s
+   ============================================================= */
+(function initTestimonials() {
+  const track = document.getElementById('testimonialTrack');
+  const dots  = document.querySelectorAll('.t-dot');
+  if (!track || !dots.length) return;
+
+  const cards = track.querySelectorAll('.testimonial-card');
+  let current = 0;
+  let timer   = null;
+
+  function goTo(idx) {
+    current = (idx + cards.length) % cards.length;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(function () { goTo(current + 1); }, 4000);
+  }
+
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goTo(parseInt(dot.dataset.idx, 10));
+      startAuto();
+    });
+  });
+
+  startAuto();
+})();
+
+
+/* =============================================================
+   8. SMOOTH SCROLL — navbar + amenity card anchor links with offset
+      Also briefly highlights the target facility item on arrival
    ============================================================= */
 (function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       const href = anchor.getAttribute('href');
       if (href === '#') return;
-
       const target = document.querySelector(href);
       if (!target) return;
-
       e.preventDefault();
 
       const navHeight = document.getElementById('navbar')
-        ? document.getElementById('navbar').offsetHeight
-        : 0;
+        ? document.getElementById('navbar').offsetHeight : 0;
 
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 10;
+      // Extra offset so the facility photo isn't hidden under nav
+      const extraOffset = target.classList.contains('facility-item') ? 40 : 10;
 
-      window.scrollTo({ top: targetTop, behavior: 'smooth' });
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - navHeight - extraOffset,
+        behavior: 'smooth'
+      });
+
+      // Gold pulse highlight on facility items when navigated to
+      if (target.classList.contains('facility-item')) {
+        target.classList.add('highlight-pulse');
+        setTimeout(function () { target.classList.remove('highlight-pulse'); }, 1800);
+      }
     });
   });
 })();
 
 
 /* =============================================================
-   7. ACTIVE NAV LINK — highlight current section in navbar
+   9. ACTIVE NAV LINK — highlight current section
    ============================================================= */
 (function initActiveNav() {
-  const sections  = document.querySelectorAll('section[id]');
-  const navLinks  = document.querySelectorAll('.nav-links a[href^="#"]');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
   if (!sections.length || !navLinks.length) return;
 
-  const navHeight = document.getElementById('navbar')
-    ? document.getElementById('navbar').offsetHeight + 20
-    : 80;
+  const navH = document.getElementById('navbar')
+    ? document.getElementById('navbar').offsetHeight + 20 : 80;
 
   function onScroll() {
     let current = '';
-
-    sections.forEach(function (section) {
-      const top = section.offsetTop - navHeight;
-      if (window.scrollY >= top) {
-        current = section.getAttribute('id');
-      }
+    sections.forEach(function (s) {
+      if (window.scrollY >= s.offsetTop - navH) current = s.getAttribute('id');
     });
-
     navLinks.forEach(function (link) {
-      link.style.color = '';
-      if (link.getAttribute('href') === '#' + current) {
-        link.style.color = '#E6B84A';
-      }
+      link.style.color = link.getAttribute('href') === '#' + current ? '#E6B84A' : '';
     });
   }
 
