@@ -294,8 +294,8 @@ img { max-width: 100%; display: block; }
       rgba(107, 26, 26, 0.55) 40%,
       rgba(13, 27, 42, 0.85) 100%
     ),
-    /* Placeholder for a hero image — replace src with a local image if desired */
-    url('https://images.unsplash.com/photo-1604928141064-207cea6f571f?w=1920&q=80')
+    /* Tirumala Venkateswara Temple — Tirupati */
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Tirumala_Temple_2015.jpg/1920px-Tirumala_Temple_2015.jpg')
     center / cover no-repeat;
 }
 
