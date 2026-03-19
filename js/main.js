@@ -181,37 +181,8 @@
 
 
 /* =============================================================
-   7. TESTIMONIALS SLIDER — auto-scroll every 4s
+   7. (Testimonials removed — replaced with Chairman's Letter)
    ============================================================= */
-(function initTestimonials() {
-  const track = document.getElementById('testimonialTrack');
-  const dots  = document.querySelectorAll('.t-dot');
-  if (!track || !dots.length) return;
-
-  const cards = track.querySelectorAll('.testimonial-card');
-  let current = 0;
-  let timer   = null;
-
-  function goTo(idx) {
-    current = (idx + cards.length) % cards.length;
-    track.style.transform = 'translateX(-' + (current * 100) + '%)';
-    dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
-  }
-
-  function startAuto() {
-    clearInterval(timer);
-    timer = setInterval(function () { goTo(current + 1); }, 4000);
-  }
-
-  dots.forEach(function (dot) {
-    dot.addEventListener('click', function () {
-      goTo(parseInt(dot.dataset.idx, 10));
-      startAuto();
-    });
-  });
-
-  startAuto();
-})();
 
 
 /* =============================================================

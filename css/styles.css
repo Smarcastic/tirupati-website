@@ -1440,110 +1440,152 @@ img { max-width: 100%; display: block; }
 
 
 /* =============================================================
-   TESTIMONIALS SECTION
+   CHAIRMAN'S LETTER SECTION
    ============================================================= */
-.testimonials {
-  background: linear-gradient(160deg, #0D1B2A 0%, #111526 100%);
+.chairman-letter {
+  background: linear-gradient(160deg, #0a1320 0%, #0D1B2A 60%, #111526 100%);
 }
 
-.testimonials-slider {
-  overflow: hidden;
+.letter-wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.letter-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%);
+  border: 1px solid rgba(201,153,58,0.3);
+  border-radius: 16px;
+  padding: 56px 60px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
   position: relative;
+  text-align: left;
 }
 
-.testimonial-track {
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-
-.testimonial-card {
-  flex: 0 0 100%;
-  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-  border: 1px solid rgba(201,153,58,0.22);
-  border-radius: 12px;
-  padding: 40px 48px;
-  box-shadow: var(--shadow-card);
-  position: relative;
-}
-
-.testimonial-card::before {
-  content: '\201C';
-  font-family: 'Cinzel', serif;
-  font-size: 8rem;
-  line-height: 0.5;
-  color: rgba(201,153,58,0.15);
-  position: absolute;
-  top: 30px;
-  left: 32px;
-}
-
-.testimonial-stars {
+.letter-ornament {
+  text-align: center;
   color: var(--gold);
   font-size: 1.1rem;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
+  opacity: 0.6;
+  margin: 8px 0 28px;
 }
 
-.testimonial-text {
-  font-size: 1rem;
-  font-style: italic;
-  color: rgba(255,248,238,0.85);
-  line-height: 1.85;
-  margin-bottom: 28px;
+.letter-salutation {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.letter-body {
+  font-size: 0.97rem;
+  color: rgba(255,248,238,0.82);
+  line-height: 1.9;
+  margin-bottom: 18px;
+}
+
+.letter-body strong {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.letter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px 0;
+  border-left: 2px solid rgba(201,153,58,0.35);
+  padding-left: 24px;
+}
+
+.letter-list li {
+  font-size: 0.95rem;
+  color: rgba(255,248,238,0.82);
+  line-height: 1.75;
+  padding: 4px 0;
   position: relative;
-  z-index: 1;
 }
 
-.testimonial-author {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.letter-list li::before {
+  content: '▸';
+  color: var(--gold);
+  position: absolute;
+  left: -20px;
+  font-size: 0.75rem;
+  top: 6px;
 }
 
-.author-avatar {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-  display: flex; align-items: center; justify-content: center;
+.letter-contact {
+  background: rgba(201,153,58,0.07);
+  border: 1px solid rgba(201,153,58,0.2);
+  border-radius: 10px;
+  padding: 22px 28px;
+  margin: 24px 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.contact-name {
   font-family: 'Cinzel', serif;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
+  color: var(--gold-light);
   font-weight: 700;
-  color: #0D1B2A;
-  flex-shrink: 0;
+  margin-bottom: 4px;
 }
 
-.testimonial-author strong {
-  display: block;
+.contact-title {
+  font-size: 0.85rem;
+  color: rgba(255,248,238,0.65);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.contact-phone {
+  display: inline-block;
   font-family: 'Cinzel', serif;
-  font-size: 0.88rem;
-  color: var(--cream);
+  font-size: 1.1rem;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.25s ease;
+}
+
+.contact-phone:hover {
+  color: var(--gold-light);
+}
+
+.letter-sign {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(201,153,58,0.2);
+}
+
+.sign-off {
+  font-size: 0.9rem;
+  color: rgba(255,248,238,0.6);
+  margin-bottom: 6px;
+  font-style: italic;
+}
+
+.sign-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  font-weight: 700;
   margin-bottom: 3px;
 }
 
-.testimonial-author span {
-  font-size: 0.78rem;
-  color: rgba(255,248,238,0.5);
-  letter-spacing: 0.05em;
+.sign-place {
+  font-size: 0.85rem;
+  color: rgba(255,248,238,0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
-.testimonial-dots {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 28px;
-}
-
-.t-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,248,238,0.25);
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.t-dot.active {
-  background: var(--gold);
-  transform: scale(1.35);
+@media (max-width: 600px) {
+  .letter-card {
+    padding: 36px 24px;
+  }
 }
 
 
