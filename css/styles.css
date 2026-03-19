@@ -1682,90 +1682,160 @@ img { max-width: 100%; display: block; }
    RESPONSIVE — MOBILE (max 768px)
    ============================================================= */
 @media (max-width: 768px) {
-  /* Navbar */
+  /* ── Navbar ── */
   .hamburger { display: flex; }
 
   .nav-links {
     position: fixed;
     top: 0; right: -100%;
     height: 100vh;
-    width: 70%;
+    width: 75%;
     max-width: 300px;
-    background: rgba(13, 27, 42, 0.98);
+    background: rgba(10, 19, 32, 0.98);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 32px;
     transition: right 0.35s ease;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
     z-index: 999;
+    border-left: 1px solid rgba(201,153,58,0.15);
   }
 
   .nav-links.open { right: 0; }
+  .nav-links a { font-size: 1.05rem; }
 
-  .nav-links a { font-size: 1rem; }
+  .nav-brand { font-size: 0.9rem; }
 
-  /* Hero */
+  /* ── General spacing ── */
+  .section { padding: 56px 0; }
+  .container { padding: 0 18px; }
+
+  /* ── Section headers ── */
+  .section-header { margin-bottom: 36px; }
+
+  /* ── Hero ── */
+  .hero-content { padding: 0 20px; text-align: center; }
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
 
-  .btn { width: 100%; justify-content: center; max-width: 320px; }
+  .btn {
+    width: 100%;
+    justify-content: center;
+    max-width: 300px;
+    padding: 14px 24px;
+    font-size: 0.78rem;
+  }
 
-  /* Sections */
-  .about-grid,
+  /* ── About ── */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .about-image { border-radius: 10px; max-height: 260px; object-fit: cover; width: 100%; }
+
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .stat-number { font-size: 2rem; }
+  .stat-label { font-size: 0.72rem; }
+
+  /* ── Showcase strip ── */
+  .showcase-item { flex: 0 0 240px; height: 160px; }
+  .showcase-item img { border-radius: 8px; }
+
+  /* ── Amenities ── */
+  .amenities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .amenity-card {
+    padding: 28px 18px 22px;
+  }
+
+  .amenity-icon { font-size: 2.4rem; margin-bottom: 14px; }
+  .amenity-card h3 { font-size: 0.9rem; }
+  .amenity-card p { font-size: 0.82rem; }
+  .amenity-cta { font-size: 0.7rem; margin-top: 14px; }
+
+  /* ── Suites ── */
+  .suites-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  .suite-card { border-radius: 10px; }
+  .suite-image { height: 220px; }
+  .suite-info { padding: 20px; }
+  .suite-info h3 { font-size: 1rem; }
+
+  /* ── Facilities masonry ── */
+  .facilities-masonry {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 180px;
+    gap: 10px;
+  }
+
+  .facility-item.tall { grid-row: span 1; }
+  .facility-item.wide { grid-column: span 2; }
+
+  .facility-overlay { padding: 16px; }
+  .facility-overlay h3 { font-size: 0.95rem; }
+  .facility-overlay p { font-size: 0.78rem; }
+
+  /* ── Parallax ── */
+  .parallax-bg { background-attachment: scroll; }
+  .quote-card { padding: 32px 24px; }
+  .quote-text { font-size: clamp(1rem, 4vw, 1.3rem); }
+
+  /* ── Membership ── */
+  .membership-grid { grid-template-columns: 1fr; gap: 20px; }
+  .membership-card { padding: 32px 22px; }
+
+  /* ── Location ── */
   .location-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
   }
 
-  .amenities-grid {
-    grid-template-columns: 1fr;
-  }
+  .map-embed { height: 260px; border-radius: 10px; }
 
-  .membership-grid {
-    grid-template-columns: 1fr;
-  }
+  /* ── Contact ── */
+  .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+  .contact-item { padding: 22px 18px; }
 
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
+  /* ── Chairman's letter ── */
+  .letter-card { padding: 32px 22px; }
+  .letter-salutation { font-size: 1rem; }
+  .letter-body { font-size: 0.9rem; }
+  .letter-list li { font-size: 0.88rem; }
+  .contact-name { font-size: 0.95rem; }
+  .contact-phone { font-size: 1rem; }
 
-  .suites-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .facilities-masonry {
-    grid-template-columns: 1fr;
-  }
-
-  .facility-item.tall,
-  .facility-item.wide { grid-row: span 1; grid-column: span 1; }
-
-  .testimonial-card { padding: 28px 20px; }
-
-  .parallax-bg { background-attachment: scroll; }
-
-  .showcase-item { flex: 0 0 260px; height: 175px; }
-
-  .whatsapp-float { bottom: 20px; right: 16px; width: 52px; height: 52px; }
-  .whatsapp-float svg { width: 26px; height: 26px; }
-
-  .section { padding: 60px 0; }
-
-  /* Footer */
+  /* ── Footer ── */
   .footer-top {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 28px;
   }
 
   .footer-links,
   .footer-docs {
     align-items: center;
   }
+
+  .footer-bottom { font-size: 0.72rem; }
+
+  /* ── WhatsApp float ── */
+  .whatsapp-float { bottom: 18px; right: 14px; width: 50px; height: 50px; }
+  .whatsapp-float svg { width: 24px; height: 24px; }
 }
 
 
@@ -1773,8 +1843,32 @@ img { max-width: 100%; display: block; }
    RESPONSIVE — SMALL MOBILE (max 480px)
    ============================================================= */
 @media (max-width: 480px) {
-  .hero-title { font-size: 1.8rem; }
-  .hero-tagline { letter-spacing: 0.15em; }
-  .quote-card { padding: 28px 20px; }
-  .membership-card { padding: 28px 18px; }
+  /* Hero */
+  .hero-title { font-size: 1.75rem; line-height: 1.25; }
+  .hero-title-location { font-size: 1.05rem; }
+  .hero-tagline { font-size: 0.7rem; letter-spacing: 0.12em; }
+  .hero-content { padding: 0 16px; }
+
+  /* Amenities: single column on very small screens */
+  .amenities-grid { grid-template-columns: 1fr; }
+
+  /* Facilities: single column on very small screens */
+  .facilities-masonry {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+  .facility-item.wide { grid-column: span 1; }
+
+  /* About stats: 2 col stays fine but smaller text */
+  .stat-number { font-size: 1.75rem; }
+
+  /* Misc */
+  .quote-card { padding: 24px 16px; }
+  .membership-card { padding: 26px 16px; }
+  .letter-card { padding: 26px 16px; }
+  .section { padding: 44px 0; }
+  .container { padding: 0 14px; }
+
+  /* Showcase */
+  .showcase-item { flex: 0 0 200px; height: 140px; }
 }
